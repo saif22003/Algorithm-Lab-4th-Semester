@@ -37,3 +37,10 @@ int main() {
 
     return 0;
 }
+
+
+// Result :
+// Enter the size of an array: 5
+// Enter the elements of the array: 1 2 3 4 5 
+// Enter the element want to search: 5
+// Element found at index 4 [Indexing starts from 0].
