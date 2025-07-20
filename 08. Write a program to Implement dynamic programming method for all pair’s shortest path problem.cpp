@@ -1,54 +1,78 @@
 // Write a program to Implement dynamic programming
 // method for all pair’s shortest path problem.
 
-//Code From FARHAN
-
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-const int INF = 1e9;
+const int INF = 1000000;  
+const int MAX = 100;      
 
 int main() {
-    int n, m;
-   // cout << "Enter number of vertices: ";
+    int n, m;  
+    int dist[MAX][MAX];
+
+    cout << "Enter number of vertices: ";
     cin >> n;
-    //cout << "Enter number of edges: ";
+
+    // Initialize all distances
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j)
+                dist[i][j] = 0;
+            else
+                dist[i][j] = INF;
+        }
+    }
+
+    cout << "Enter number of edges: ";
     cin >> m;
 
-    // Initialize distance matrix
-    vector<vector<int>> dist(n + 1, vector<int>(n + 1, INF));
-
-    for (int i = 1; i <= n; ++i)
-        dist[i][i] = 0;
-
-  //  cout << "Enter edges in format (from to weight):\n";
-    for (int i = 0; i < m; ++i) {
+    cout << "Enter edges in format: from to weight (1-based indexing)\n";
+    for (int i = 0; i < m; i++) {
         int u, v, w;
         cin >> u >> v >> w;
+        u--; v--; 
         dist[u][v] = w;
     }
 
-    // Floyd-Warshall DP
-    for (int k = 1; k <= n; ++k) {
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                if (dist[i][k] < INF && dist[k][j] < INF)
-                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+    // Floyd-Warshall Algorithm
+    for (int k = 0; k < n; k++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dist[i][k] + dist[k][j] < dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
             }
         }
     }
 
-    // Output shortest distances
-  cout << "\nShortest distances between every pair of vertices:\n";
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= n; ++j) {
+    // Print shortest distances
+    cout << "\nShortest distances between every pair:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             if (dist[i][j] == INF)
-                cout << "INF ";
+                cout << "INF\t";
             else
-                cout << dist[i][j] << " ";
+                cout << dist[i][j] << "\t";
         }
         cout << endl;
     }
 
     return 0;
 }
+
+
+// Result: 
+
+// Enter number of vertices: 4
+// Enter number of edges: 4
+// Enter edges in format: from to weight (1-based indexing)
+// 1 4  5
+// 1 2 4
+// 2 3 7
+// 4 3 6
+
+// Shortest distances between every pair:
+// 0	4	11	5	
+// INF	0	7	INF	
+// INF	INF	0	INF	
+// INF	INF	6	0
