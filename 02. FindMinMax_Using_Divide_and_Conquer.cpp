@@ -1,3 +1,6 @@
+// 02.FindMinMax_Using_Divide_and_Conquer.cpp
+// # Find Minimum and Maximum using Divide and Conquer
+
 #include <iostream>
 using namespace std;
 
@@ -19,7 +22,6 @@ void findMinMax(int arr[], int low, int high, int &minVal, int &maxVal) {
         }
         return;
     }
-
 
     int mid = (low + high) / 2;
 
